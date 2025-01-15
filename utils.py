@@ -1,5 +1,7 @@
 import random
 import torch
+import scipy
+import numpy as np
 
 random.seed(0)
 torch.manual_seed(0)
@@ -45,4 +47,48 @@ def evaluate_log(self, ref_data, output, my_arange, device):
     curves_values = dists1 * curves_values0 + dists0 * curves_values1
     return curves_values
 
+def eval_along_y_with_noize(ref_data, ref_y, noize_std=None, noize_rel_std=0.01):
+    my_inds = (ref_y + 0.5).astype(int)
+    old_data = ref_data[my_inds]
+    i0s = np.floor(ref_y).astype(int)
+    i1s = i0s + 1
+    # indexes = torch.max(indexes, 0)
+    # indexes = torch.min(indexes, self.input_ref_size-1)
+    curves_values0 = ref_data[i0s]
+    curves_values1 = ref_data[i1s]
+    dists0 = ref_y - i0s
+    dists1 = i1s - ref_y
+    if noize_std is None:
+        min_data = np.min(ref_data)
+        max_data = np.max(ref_data)
+        data_range = max_data - min_data
+        noize_std = data_range * noize_rel_std
+        # print('Computed noize std ', noize_std)
+
+    # correlated noise
+    # x_for_corr = np.arange(curves_values0.size).reshape(curves_values0.size, 1) / curves_values0.size
+    # dist = scipy.spatial.distance.pdist(x_for_corr)
+    # dist = scipy.spatial.distance.squareform(dist)
+    # correlation_scale = 1  # harf coded
+    # cov = np.exp(-dist ** 2 / (2 * correlation_scale))
+    # noise = np.random.multivariate_normal(0*curves_values0, cov)
+
+    # fast correlated noise
+    # correlation_scale = curves_values0.size // 8
+    correlation_scale = 8
+    dist = np.arange(-correlation_scale, correlation_scale)
+    noise = np.random.normal(scale=noize_std, size=curves_values0.size)
+    filter_kernel = np.exp(-dist ** 2 / (2 * correlation_scale))
+    noise_correlated = scipy.signal.fftconvolve(noise, filter_kernel, mode='same')
+
+    # plt.figure()
+    # plt.plot(noise)
+    # plt.plot(noise_correlated)
+    # plt.show()
+    # exit()
+    curves_values = dists1 * curves_values0 + dists0 * curves_values1 + noise_correlated
+    # todo add noize
+    # my_inds = min(my_inds, self.ref_len-1)
+    # my_inds = max(my_inds, 0)
+    return curves_values
 
