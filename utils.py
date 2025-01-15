@@ -1,22 +1,23 @@
 import random
-import torch
 import scipy
 import numpy as np
 
 random.seed(0)
-torch.manual_seed(0)
 
 def convert_to_image(reference_log, my_log):
-    # ref, data = x
-    # ref_mat = ref.repeat(1, self.input_data_size,1)
-    ref2 = reference_log.unsqueeze(2)
-    input_data_size = my_log.size()[1]
-    ref_mat = ref2.repeat((1, 1, input_data_size))
-    data1 = my_log.unsqueeze(1)
-    ref_data_size = reference_log.size()[1]
-    data_mat = data1.repeat(1, ref_data_size, 1)
-    image = 0.5 + (ref_mat - data_mat) * 0.5
-    image = image.unsqueeze(1)
+    # reference is 1d numpy array
+    # my_log is 1d numpy array
+    # make reference to 2d "unsqueeze"
+    ref2 = np.expand_dims(reference_log, axis=1)
+    input_data_size = len(my_log)
+    # make repeat for numpy
+    ref_mat = np.repeat(ref2, input_data_size, axis=1)
+    # make data to 2d "unsqueeze"
+    data1 = np.expand_dims(my_log, axis=0)
+    ref_data_size = len(reference_log)
+    data_mat = np.repeat(data1, ref_data_size, axis=0)
+    image = ref_mat - data_mat
+    # image = image.unsqueeze(1)
     return image
 
 def default_traj_to_index(self, traj, device):
