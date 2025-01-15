@@ -87,6 +87,7 @@ def eval_along_y_with_noize(ref_data, ref_y, noize_std=None, noize_rel_std=0.01)
     # plt.show()
     # exit()
     curves_values = dists1 * curves_values0 + dists0 * curves_values1 + noise_correlated
+    curves_values = np.maximum(curves_values, 0)
     # todo add noize
     # my_inds = min(my_inds, self.ref_len-1)
     # my_inds = max(my_inds, 0)

@@ -48,7 +48,8 @@ def get_data_series_default(plot=False, return_plot_data=False):
     if return_plot_data:
         return (ref_data, my_arange, data_np)
 
-    return ref_data
+    depths = my_arange
+    return depths, ref_data
 
 
 if __name__ == '__main__':
