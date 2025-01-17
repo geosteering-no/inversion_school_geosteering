@@ -16,14 +16,18 @@ if __name__ == "__main__":
     lateral_well_shape = np.zeros(geomodel_1d.shape)
 
     lateral_log, rel_depth_inds = heat_map.get_log_with_noise(ref_log=ref_data,
-                                     log_offset_unit=700.,
+                                     log_offset_unit=900.,
                                      delta_z=delta_z,
                                      layer_depths=geomodel_1d,
                                      well_depths=lateral_well_shape,
-                                     noize_rel_std=0.03)
+                                     noize_rel_std=0.00,
+                                     my_seed=0)
 
+    delta_x = 300
     from_ind = 3000
-    to_ind = from_ind+100
+    to_ind = from_ind+delta_x
+    x1 = from_ind
+    x2 = to_ind
     # center =
 
     def objective(x, a, b):
@@ -40,8 +44,8 @@ if __name__ == "__main__":
 
     plt.figure()
     result = objective(x, p_opt[0], p_opt[1])
-    plt.plot(result)
-    plt.plot(log_segment)
+    plt.plot(result, label='Best fit')
+    plt.plot(log_segment, label='True log')
 
     plt.figure()
 
