@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 
 CENTER_OFFSET = 31
 
-def get_log_with_noise(ref_log, log_offset_unit, delta_z, layer_depths, well_depths, noize_std=None, noize_rel_std=0.01):
+def get_log_with_noise(ref_log, log_offset_unit, delta_z, layer_depths, well_depths, noize_std=None, noize_rel_std=0.01, my_seed=None):
     # convert the layer depth and the well depth to indexes
     # first compute relative positions
     rel_depths = well_depths - layer_depths
     rel_depths_ind = (rel_depths + log_offset_unit) / delta_z
-    lateral_log = utils.eval_along_y_with_noize(ref_log, rel_depths_ind, noize_std=noize_std, noize_rel_std=noize_rel_std)
+    lateral_log = utils.eval_along_y_with_noize(ref_log, rel_depths_ind, noize_std=noize_std, noize_rel_std=noize_rel_std, my_seed=my_seed)
     return lateral_log, rel_depths_ind
 
 def convert_to_image(ref_log, lateral_log):
@@ -71,14 +71,14 @@ if __name__ == '__main__':
     lateral_well_shape = np.zeros(geomodel_1d.shape)
 
     lateral_log, rel_depth_inds = get_log_with_noise(ref_log=ref_data,
-                                     log_offset_unit=700.,
+                                     log_offset_unit=1000.,
                                      delta_z=delta_z,
                                      layer_depths=geomodel_1d,
                                      well_depths=lateral_well_shape,
                                      noize_rel_std=0.01)
 
     from_ind = 3000
-    to_ind = from_ind+100
+    to_ind = from_ind+500
     image_part = get_image_chunk(ref_data, lateral_log, from_ind, to_ind, int(rel_depth_inds[from_ind]))
     plt.imshow(image_part, aspect='auto', vmin=-0.1, vmax=0.1, cmap='bwr')
     plt.plot(rel_depth_inds[from_ind:to_ind]-rel_depth_inds[from_ind]+CENTER_OFFSET, '--', color='black', alpha=0.5)
