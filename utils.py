@@ -80,7 +80,8 @@ def eval_along_y_with_noize(ref_data, ref_y, noize_std=None, noize_rel_std=0.01,
 
     # fast correlated noise
     # correlation_scale = curves_values0.size // 8
-    correlation_scale = 8
+    # was 8
+    correlation_scale = 200
     dist = np.arange(-correlation_scale, correlation_scale)
     noise = np.random.normal(scale=noize_std, size=curves_values0.size)
     filter_kernel = np.exp(-dist ** 2 / (2 * correlation_scale))
