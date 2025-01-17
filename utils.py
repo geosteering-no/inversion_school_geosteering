@@ -2,7 +2,7 @@ import random
 import scipy
 import numpy as np
 
-random.seed(0)
+# random.seed(0)
 
 def convert_to_image(reference_log, my_log):
     # reference is 1d numpy array
@@ -48,7 +48,11 @@ def evaluate_log(ref_data, output, my_arange, device):
     curves_values = dists1 * curves_values0 + dists0 * curves_values1
     return curves_values
 
-def eval_along_y_with_noize(ref_data, ref_y, noize_std=None, noize_rel_std=0.01):
+def eval_along_y_with_noize(ref_data, ref_y, noize_std=None, noize_rel_std=0.01, my_seed=None):
+    if my_seed is None:
+        np.random.seed(random.randint(0, 100500))
+    else:
+        np.random.seed(seed=my_seed)
     my_inds = (ref_y + 0.5).astype(int)
     old_data = ref_data[my_inds]
     i0s = np.floor(ref_y).astype(int)
