@@ -44,7 +44,7 @@ if __name__ == "__main__":
         lateral_log_approx = utils.eval_along_y_with_noize(ref_data, line, noize_rel_std=0.0)
         return lateral_log_approx
 
-    p_opt, p_cov = curve_fit(objective, x, log_segment, p0=[0, int(rel_depth_inds[from_ind])])
+    p_opt, p_cov = curve_fit(objective, x, log_segment, p0=[0, int(rel_depth_inds[from_ind])], method='trf', loss='arctan')
     opt_curve = p_opt[0] * x + p_opt[1]
 
     p_opt_2, p_cov_2 = curve_fit(objective2, x, log_segment, p0=[rel_depth_inds[from_ind], rel_depth_inds[from_ind]+5])
