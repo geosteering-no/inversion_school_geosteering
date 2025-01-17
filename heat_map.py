@@ -2,6 +2,8 @@ import utils
 import numpy as np
 import matplotlib.pyplot as plt
 
+CENTER_OFFSET = 31
+
 def get_log_with_noise(ref_log, log_offset_unit, delta_z, layer_depths, well_depths, noize_std=None, noize_rel_std=0.01):
     # convert the layer depth and the well depth to indexes
     # first compute relative positions
@@ -52,6 +54,12 @@ def plot_with_panels(ref_log, lateral_log, curve):
     ax_offset_log.plot(ref_log, y_coord)
     plt.show()
 
+def get_image_chunk(ref_data, lateral_log, from_ind, to_ind, center):
+    image = convert_to_image(ref_data, lateral_log)
+
+    return image[center-CENTER_OFFSET:center+CENTER_OFFSET, from_ind:to_ind]
+
+
 if __name__ == '__main__':
     import my_curve_data
     depths, ref_data = my_curve_data.get_data_series_default(plot=False)
@@ -67,6 +75,14 @@ if __name__ == '__main__':
                                      delta_z=delta_z,
                                      layer_depths=geomodel_1d,
                                      well_depths=lateral_well_shape,
-                                     noize_rel_std=0.00)
+                                     noize_rel_std=0.01)
 
-    plot_with_panels(ref_data, lateral_log, rel_depth_inds)
+    from_ind = 3000
+    to_ind = from_ind+100
+    image_part = get_image_chunk(ref_data, lateral_log, from_ind, to_ind, int(rel_depth_inds[from_ind]))
+    plt.imshow(image_part, aspect='auto', vmin=-0.1, vmax=0.1, cmap='bwr')
+    plt.plot(rel_depth_inds[from_ind:to_ind]-rel_depth_inds[from_ind]+CENTER_OFFSET, '--', color='black', alpha=0.5)
+    plt.show()
+
+
+    # plot_with_panels(ref_data, lateral_log, rel_depth_inds)

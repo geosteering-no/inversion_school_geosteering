@@ -28,7 +28,7 @@ def default_traj_to_index(self, traj, device):
                                 torch.ones(index.size(), device=device) * (self.input_ref_size-2))
     return index_trunc
 
-def evaluate_log(self, ref_data, output, my_arange, device):
+def evaluate_log(ref_data, output, my_arange, device):
     # todo refactor to remove self
     my_arange_uns = my_arange.unsqueeze(1)
     my_arange_uns = my_arange_uns.unsqueeze(2)
