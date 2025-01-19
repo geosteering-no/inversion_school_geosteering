@@ -1,0 +1,35 @@
+## Lecture 1: Overview of geosteering and sequential inversion
+- [ ] What is geosteering? (2 min)
+- [ ] Data as source of informed decisions; Inference vs decision quality plot (3 min)
+- [ ] Overview of data inversion in geosteering (1 min)
+- [ ] EM Data (4 min)
+- [ ] Determenistic vs Bayesian inversion (5 min)
+- [ ] Stratigraphic geosteering overview (5 min)
+- [ ] Stratigraphic inversion (5 min)
+- [ ] Introduce notation (5 min)
+- [ ] Sequncial stratigraphic inversion (5 min)
+## Exercise 1 
+- [ ] Problem formulation in python (10 min)
+- [ ] Curve fit method (5 min)
+- [ ] Constraints and/or regularization (5 min)
+- [ ] Manually writing optimization problem (10 min)
+- [ ] Regularization (5 min)
+## Lecture 2: Filtering problem
+- [ ] Comeptition visualization (10 min)
+- [ ] Problem with determenistic inversion and back to problem formulation (5 min)
+- [ ] Bayes rule (5 min)
+- [ ] Defenition of the filtering problem (5 min)
+- [ ] List of filtering methods (5 min)
+- [ ] Particle filter components (10 min)
+- [ ] Challange with forward modal / proposal distribution in geomodelin (10 min)
+- [ ] Data competition (3 min)
+- [ ] Ressi's results with particle filter (15 min)
+- [ ] Performance
+## Lecture 3: Direct inversion with machine learning 
+- [ ] Mixture Density Network (5 min)
+- [ ] Multi-Trajectoy loss (5 min)
+- [ ] Results from Alyaev and Ahmed 2022 (10 min)
+- [ ] Partial generalization to sequencial (5 min)
+- [ ] Performance (5 min)
+## Learning outcomes 
+- [ ] Outcomes (5 min)
