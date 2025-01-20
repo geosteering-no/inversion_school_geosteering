@@ -14,8 +14,8 @@ def solve_sequencial(range_x1_x2, lateral_log, ref_data, prev_x, prev_y):
     y1_inp = y0_inp + (prev_y[-1] - prev_y[0]) / (prev_x[-1] - prev_x[0]) * (x2 - x1)
 
     def objective2(x, y1, y2):
-        line = (y2 - y1) / (x2 - x1) * (x - x1) + y1
-        lateral_log_approx = utils.eval_along_y_with_noize(ref_data, line, noize_rel_std=0.0)
+        b_line = (y2 - y1) / (x2 - x1) * (x - x1) + y1
+        lateral_log_approx = utils.eval_along_y_with_noize(ref_data, b_line, noize_rel_std=0.0)
         return lateral_log_approx
 
 
