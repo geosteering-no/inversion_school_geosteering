@@ -3,14 +3,13 @@ from scipy.optimize import curve_fit
 
 import utils
 
-def solve_sequencial(range_x1_x2, lateral_log, ref_data, prev_x, prev_y, trend_gradient, prev_solution=None):
+def solve_sequencial(range_x1_x2, log_segment, ref_data, prev_x, prev_y, trend_gradient, prev_solution=None):
     x1 = range_x1_x2[0]
     x2 = range_x1_x2[1]
     x = np.arange(x1, x2 + 1)
-    log_segment = lateral_log[x1:x2 + 1]
 
-    y0_inp = prev_y[-1]
-    y1_inp = y0_inp + (prev_y[-1] - prev_y[0]) / (prev_x[-1] - prev_x[0]) * (x2 - x1)
+    y0_inp = prev_y + trend_gradient * (x1 - prev_x)
+    y1_inp = y0_inp + trend_gradient * (x2 - prev_x)
 
     def objective2(x, y1, y2):
         b_line = (y2 - y1) / (x2 - x1) * (x - x1) + y1

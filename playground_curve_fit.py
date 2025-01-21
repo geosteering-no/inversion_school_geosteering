@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
-from sympy.abc import alpha
 
 import heat_map
 import utils
