@@ -15,7 +15,8 @@ if __name__ == "__main__":
             'solver': sergeys_solve_sequential,
             'z_prev': None,
             'prev_solution': None,
-            'answer': None}
+            'answer': None
+        }
     }
 
     import my_curve_data
@@ -29,14 +30,6 @@ if __name__ == "__main__":
 
     lateral_well_shape = np.zeros(geomodel_1d.shape)
 
-    lateral_log, rel_depth_inds = heat_map.get_log_with_noise(ref_log=ref_data,
-                                                              log_offset_unit=905.,
-                                                              delta_z=delta_z,
-                                                              layer_depths=geomodel_1d,
-                                                              well_depths=lateral_well_shape,
-                                                              noize_rel_std=0.01,
-                                                              my_seed=0)
-
     # constants for sequential inversion
     max_i = 7
     delta_x = 300
@@ -44,11 +37,20 @@ if __name__ == "__main__":
     to_ind = from_ind + delta_x
     x1 = from_ind
     x2 = to_ind - 1
+    noize_level = 0.01
 
+    lateral_log, rel_depth_inds = heat_map.get_log_with_noise(ref_log=ref_data,
+                                                              log_offset_unit=905.,
+                                                              delta_z=delta_z,
+                                                              layer_depths=geomodel_1d,
+                                                              well_depths=lateral_well_shape,
+                                                              noize_rel_std=noize_level,
+                                                              my_seed=0)
 
 
     # initialize solutions with zeros
     for entry_key in solver_dict:
+        solver_dict[entry_key]['prev_solution'] = None
         solver_dict[entry_key]['answer'] = np.zeros((delta_x * max_i))
         solver_dict[entry_key]['z_prev'] = rel_depth_inds[from_ind]
 
@@ -66,7 +68,8 @@ if __name__ == "__main__":
                 [x1,x2], log_segment, ref_data, x1-1,
                 prev_y=solver_dict[entry_key]['z_prev'],
                 trend_gradient=coarse_geo_trend,
-                prev_solution = solver_dict[entry_key]['prev_solution']
+                prev_solution = solver_dict[entry_key]['prev_solution'],
+                noize_level=noize_level
             )
             solver_dict[entry_key]['prev_solution'] = solution
             prev_y = solver_dict[entry_key]['z_prev'] = solution[-1]
@@ -77,8 +80,12 @@ if __name__ == "__main__":
     plt.imshow(image_part, aspect='auto', vmin=-0.1, vmax=0.1, cmap='bwr')
     plt.plot(rel_depth_inds[from_ind:to_ind_extended]-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET, '--', color='black', alpha=0.5,
              label='True solution')
-    plt.plot(solver_dict[entry_key]['answer'] - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET, color='black', alpha=0.5,
-             label='Constrained solution')
+    for entry_key in solver_dict:
+        # TODO improve visualization
+        plt.plot(solver_dict[entry_key]['answer'] - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET,
+                 color='black',
+                 # alpha=0.5,
+                 label=entry_key)
     plt.legend()
 
     plt.show()

@@ -15,6 +15,9 @@ Provides a boundary "B"-function
 
 ### Some starting points
 
+#### Testing that your cuatom function works
+`sequential_runner.py` lets you import your custom function and show the resulting solution.
+
 #### `my_curve_fit.py`
 Contains a sequential fitting using `curvefit`
 
