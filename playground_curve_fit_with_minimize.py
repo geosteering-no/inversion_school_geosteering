@@ -53,34 +53,6 @@ if __name__ == "__main__":
 
     opt_curve_2_total = np.zeros((delta_x*max_i))
 
-    # for i in range(max_i):
-    #     x1 = from_ind + delta_x * i
-    #     x2 = from_ind + delta_x * (i+1) - 1
-    #     x = np.arange(x1, x2+1)
-    #     log_segment = lateral_log[x1:x2+1]
-    #     def objective2(x, y1, y2):
-    #         line = (y2 - y1) / (x2 - x1) * (x - x1) + y1
-    #         lateral_log_approx = utils.eval_along_y_with_noize(ref_data, line, noize_rel_std=0.0)
-    #         return lateral_log_approx
-    #     p_opt_2, p_cov_2 = curve_fit(objective2, x, log_segment, p0=[y0_inp, y1_inp],
-    #                                  method='trf',
-    #                                  loss='soft_l1',
-    #                                  bounds=(
-    #                                      [y0_inp-10., -np.inf],
-    #                                      [y0_inp+10., np.inf]
-    #                                  )
-    #                                  )
-    #     opt_curve2 = (p_opt_2[1]-p_opt_2[0])/(x2-x1)*(x-x1) + p_opt_2[0]
-    #     opt_curve_2_total[delta_x*i:delta_x*(i+1)] = opt_curve2
-    #     y0_inp = p_opt_2[1]
-    #     y1_inp = y0_inp + 15
-    #
-    #     plt.figure()
-    #     result2 = objective2(x, p_opt_2[0], p_opt_2[1])
-    #     plt.plot(result2, label='Best fit 2', alpha=0.5)
-    #     plt.plot(log_segment, 'v', label='True log', alpha=0.5)
-    #     plt.show()
-
     for i in range(max_i):
         x1 = from_ind + delta_x * i
         x2 = from_ind + delta_x * (i+1) - 1
@@ -109,15 +81,6 @@ if __name__ == "__main__":
         y0_inp = p_opt_2[1]
         y1_inp = y0_inp + 15
 
-
-    # plt.figure()
-    # result = objective(x, p_opt[0], p_opt[1])
-    # result2 = objective2(x, p_opt_2[0], p_opt_2[1])
-    # plt.plot(result, '*-', label='Best fit', alpha=0.5)
-    # plt.plot(result2, label='Best fit 2', alpha=0.5)
-    # plt.plot(log_segment, 'v', label='True log', alpha=0.5)
-    # plt.legend()
-    # plt.figure()
 
     to_ind_extended = from_ind+max_i*delta_x
     image_part = heat_map.get_image_chunk(ref_data, lateral_log, from_ind, to_ind_extended, int(rel_depth_inds[from_ind]))

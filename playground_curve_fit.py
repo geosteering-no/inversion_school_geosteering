@@ -80,21 +80,15 @@ if __name__ == "__main__":
         # plt.show()
 
 
-
-    plt.figure()
-    result = objective(x, p_opt[0], p_opt[1])
-    result2 = objective2(x, p_opt_2[0], p_opt_2[1])
-    plt.plot(result, '*-', label='Best fit', alpha=0.5)
-    plt.plot(result2, label='Best fit 2', alpha=0.5)
-    plt.plot(log_segment, 'v', label='True log', alpha=0.5)
-    plt.legend()
-    plt.figure()
-
     to_ind_extended = from_ind+max_i*delta_x
     image_part = heat_map.get_image_chunk(ref_data, lateral_log, from_ind, to_ind_extended, int(rel_depth_inds[from_ind]))
     plt.imshow(image_part, aspect='auto', vmin=-0.1, vmax=0.1, cmap='bwr')
-    plt.plot(rel_depth_inds[from_ind:to_ind_extended]-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET, '--', color='black', alpha=0.5)
-    plt.plot(opt_curve-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET)
-    plt.plot(opt_curve_2_total - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET)
+    plt.plot(rel_depth_inds[from_ind:to_ind_extended]-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET, '--', color='black', alpha=0.5,
+             label='True solution')
+    plt.plot(opt_curve-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET, color='grey', alpha=1.,
+             label='Naive solution')
+    plt.plot(opt_curve_2_total - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET, color='black', alpha=0.5,
+             label='Constrained solution')
+    plt.legend()
 
     plt.show()
