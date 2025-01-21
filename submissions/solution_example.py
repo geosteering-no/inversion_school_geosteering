@@ -14,6 +14,7 @@ def solve_sequencial(range_x1_x2, log_segment, ref_data, prev_x, prev_y, trend_g
 
     def objective2(x, y1, y2):
         b_line = (y2 - y1) / (x2 - x1) * (x - x1) + y1
+        # applying f(b(x))
         lateral_log_approx = utils.eval_along_y_with_noize(ref_data, b_line, noize_rel_std=0.0)
         return lateral_log_approx
 
