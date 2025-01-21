@@ -1,10 +1,9 @@
 import numpy as np
 from scipy.optimize import curve_fit
-from scipy.special import delta
 
 import utils
 
-def solve_sequencial(range_x1_x2, lateral_log, ref_data, prev_x, prev_y):
+def solve_sequencial(range_x1_x2, lateral_log, ref_data, prev_x, prev_y, trend_gradient, prev_solution=None):
     x1 = range_x1_x2[0]
     x2 = range_x1_x2[1]
     x = np.arange(x1, x2 + 1)

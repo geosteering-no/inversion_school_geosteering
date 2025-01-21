@@ -4,9 +4,9 @@ from scipy.special import delta
 
 import utils
 
-def solve_sequencial(range_x1_x2, lateral_log, ref_data, prev_x, prev_y):
-    x1 = range_x1_x2[0]
-    x2 = range_x1_x2[1]
+def solve_sequencial(current_range_x1_x2, lateral_log, ref_data, prev_x, prev_y, trend_gradient, prev_solution=None):
+    x1 = current_range_x1_x2[0]
+    x2 = current_range_x1_x2[1]
     x = np.arange(x1, x2 + 1)
     log_segment = lateral_log[x1:x2 + 1]
 
