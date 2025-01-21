@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def get_1d_geology_deafult(plot=False):
+def get_1d_geology_deafult(plot=False, get_trend_gradient=False):
     # original
     file_path = "trajectory_data/3da43bb8.csv"
     # # faulted
@@ -22,7 +22,11 @@ def get_1d_geology_deafult(plot=False):
         plt.plot(df['VS_APPROX_adjusted'], df['HORIZON_Z_adjusted'])
         plt.plot(new_vs_grid, new_horizon_z)
         plt.show()
-    return new_horizon_z
+    if get_trend_gradient:
+        # todo update for other geologies
+        return new_horizon_z, 15./300.
+    else:
+        return new_horizon_z
 
 
 if __name__ == "__main__":

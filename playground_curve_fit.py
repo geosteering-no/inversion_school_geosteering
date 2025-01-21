@@ -12,7 +12,7 @@ if __name__ == "__main__":
     delta_z = depths[1] - depths[0]
 
     import my_trajectory_data
-    geomodel_1d = my_trajectory_data.get_1d_geology_deafult(plot=False)
+    geomodel_1d, coarse_geo_trend = my_trajectory_data.get_1d_geology_deafult(plot=False, get_trend_gradient=True)
 
     lateral_well_shape = np.zeros(geomodel_1d.shape)
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     opt_curve = p_opt[0] * x + p_opt[1]
 
     y0_inp = rel_depth_inds[from_ind]
-    y1_inp = rel_depth_inds[from_ind] + 15
+    y1_inp = rel_depth_inds[from_ind] + coarse_geo_trend * delta_x
 
 
     opt_curve_2_total = np.zeros((delta_x*max_i))
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         opt_curve2 = (p_opt_2[1]-p_opt_2[0])/(x2-x1)*(x-x1) + p_opt_2[0]
         opt_curve_2_total[delta_x*i:delta_x*(i+1)] = opt_curve2
         y0_inp = p_opt_2[1]
-        y1_inp = y0_inp + 15
+        y1_inp = y0_inp + coarse_geo_trend * delta_x
 
         plt.figure()
         result2 = objective2(x, p_opt_2[0], p_opt_2[1])
