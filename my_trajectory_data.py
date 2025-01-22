@@ -5,12 +5,11 @@ import matplotlib.pyplot as plt
 def get_1d_geology_deafult(plot=False, get_trend_gradient=False):
     # original
     file_path = "trajectory_data/3da43bb8.csv"
-    # # faulted
-    # file_path = "trajectory_data/8b440fd7.csv"
-    # file_path = "trajectory_data/8f434a7e.csv"
+    # file_path = "trajectory_data/c60a50fe.csv"
+    # file_path = "trajectory_data/f954596a.csv"
     # # some variation
-    # file_path = "trajectory_data/8f4560a1.csv"
-    # file_path = "trajectory_data/9ac9aa08.csv"
+    # file_path = "trajectory_data/781ee7fe.csv"
+    # file_path = "trajectory_data/f42b52f5.csv"
 
     df = pd.read_csv(file_path)
     # Define the new grid for VS_APPROX_adjusted with a fixed step of 1
@@ -23,8 +22,12 @@ def get_1d_geology_deafult(plot=False, get_trend_gradient=False):
         plt.plot(new_vs_grid, new_horizon_z)
         plt.show()
     if get_trend_gradient:
-        # todo update for other geologies
-        return new_horizon_z, 15./300.
+        # compute regional trend
+        trend_distance = 300*15
+        z2 = new_horizon_z[trend_distance]
+        # return new_horizon_z, 15. / 300
+        print(f"Trend delta z over {trend_distance} distance is {z2}. \n Gradient: {-z2/trend_distance}")
+        return new_horizon_z, - z2 / trend_distance
     else:
         return new_horizon_z
 

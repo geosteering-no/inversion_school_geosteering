@@ -26,7 +26,9 @@ if __name__ == "__main__":
 
     import my_trajectory_data
 
-    geomodel_1d, coarse_geo_trend = my_trajectory_data.get_1d_geology_deafult(plot=False, get_trend_gradient=True)
+    geomodel_1d, coarse_geo_trend = my_trajectory_data.get_1d_geology_deafult(plot=False,
+                                                                              get_trend_gradient=True)
+
 
     lateral_well_shape = np.zeros(geomodel_1d.shape)
 
@@ -38,6 +40,16 @@ if __name__ == "__main__":
     x1 = from_ind
     x2 = to_ind - 1
     noize_level = 0.01
+
+    # overwrite the gradient with more local one for simpler problem
+    x0_trend = from_ind
+    x1_trend = from_ind + delta_x * max_i
+    y0_trend = geomodel_1d[x0_trend]
+    y1_trend = geomodel_1d[x1_trend]
+    trend_recomputed = - (y1_trend - y0_trend) / (x1_trend - x0_trend)
+    # old hard-coded
+    # coarse_geo_trend = 15. / 300
+    coarse_geo_trend = trend_recomputed
 
     lateral_log, rel_depth_inds = heat_map.get_log_with_noise(ref_log=ref_data,
                                                               log_offset_unit=905.,
