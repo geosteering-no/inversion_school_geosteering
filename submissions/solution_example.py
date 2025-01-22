@@ -23,9 +23,9 @@ def solve_sequencial(range_x1_x2, log_segment, ref_data, prev_x, prev_y, trend_g
                                  method='trf',
                                  loss='soft_l1',
                                  bounds=(
-                                     [y0_inp - 10., -np.inf],
-                                     [y0_inp + 10., np.inf]
-                                 )
+                                     [y0_inp - 15., -np.inf],
+                                     [y0_inp + 15., np.inf]
+                                 ), maxfev = 50000
                                  )
     opt_curve2 = (p_opt_2[1] - p_opt_2[0]) / (x2 - x1) * (x - x1) + p_opt_2[0]
 
