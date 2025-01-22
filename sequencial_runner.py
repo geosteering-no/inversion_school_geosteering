@@ -1,6 +1,7 @@
 # outside imports
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.linalg import norm
 
 # utility imports
 import heat_map
@@ -94,10 +95,12 @@ if __name__ == "__main__":
              label='True solution')
     for entry_key in solver_dict:
         # TODO improve visualization
+        # compute misfit
+        their_misfit = norm(rel_depth_inds[from_ind:to_ind_extended] - solver_dict[entry_key]['answer'], 1) / (to_ind_extended - from_ind)
         plt.plot(solver_dict[entry_key]['answer'] - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET,
                  color='black',
                  # alpha=0.5,
-                 label=entry_key)
+                 label=f"{entry_key} e={their_misfit:.2f}")
     plt.legend()
 
     plt.show()
