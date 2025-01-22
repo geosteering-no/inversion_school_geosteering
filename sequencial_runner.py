@@ -9,6 +9,7 @@ import utils
 
 # solver imports
 from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
 
 if __name__ == "__main__":
     solver_dict = {
@@ -17,7 +18,11 @@ if __name__ == "__main__":
             'z_prev': None,
             'prev_solution': None,
             'answer': None
+        },
+        'tikhonov_optimize_test':{
+            'solver': tikhonovs
         }
+
     }
 
     import my_curve_data
