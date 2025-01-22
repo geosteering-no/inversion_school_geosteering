@@ -9,6 +9,7 @@ import utils
 
 # solver imports
 from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve_sequential
 
 if __name__ == "__main__":
     solver_dict = {
@@ -17,7 +18,13 @@ if __name__ == "__main__":
             'z_prev': None,
             'prev_solution': None,
             'answer': None
-        }
+        },
+         'oslo_bergen':{
+            'solver': oslobergen_solve_sequential,
+            'z_prev': None,
+            'prev_solution': None,
+            'answer': None
+        },
     }
 
     import my_curve_data
