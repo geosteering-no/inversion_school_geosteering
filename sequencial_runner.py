@@ -10,6 +10,8 @@ import utils
 # solver imports
 from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
 from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve_sequential
+from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
+from submissions.yas_most_solution import solve_sequential as yas_kiwi_solver
 
 if __name__ == "__main__":
     solver_dict = {
@@ -25,6 +27,12 @@ if __name__ == "__main__":
             'prev_solution': None,
             'answer': None
         },
+        'tikhonov_optimize_test':{
+            'solver': tikhonovs
+        },
+        'yas_most_solution':{
+            'solver': yas_kiwi_solver
+        }
     }
 
     import my_curve_data
