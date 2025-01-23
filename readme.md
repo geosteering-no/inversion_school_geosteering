@@ -1,4 +1,8 @@
-# Stratigraphic inversion exercise
+# Real-Time Geological Inversion for Decision-Making and Stratigraphic Inversion Exercise
+
+## Lecture notes
+
+Lecture notes are in [the content folder](/content).
 
 ## Overview of files
 
