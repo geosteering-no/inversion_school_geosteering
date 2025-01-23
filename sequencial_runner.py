@@ -9,6 +9,7 @@ import utils
 
 # solver imports
 from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve_sequential
 from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
 from submissions.yas_most_solution import solve_sequential as yas_kiwi_solver
 
@@ -16,6 +17,12 @@ if __name__ == "__main__":
     solver_dict = {
         'sergeys_test':{
             'solver': sergeys_solve_sequential,
+            'z_prev': None,
+            'prev_solution': None,
+            'answer': None
+        },
+         'oslo_bergen':{
+            'solver': oslobergen_solve_sequential,
             'z_prev': None,
             'prev_solution': None,
             'answer': None
