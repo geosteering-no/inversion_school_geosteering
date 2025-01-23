@@ -8,18 +8,36 @@ import heat_map
 import utils
 
 # solver imports
-#from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
-from competition_plotter import solver_dict
+from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve_sequential
+from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
+from submissions.yas_most_solution import solve_sequential as yas_kiwi_solver
+from submissions.sb_1 import solve_sequencial as sb_1_solution
 
 if __name__ == "__main__":
-    #solver_dict = {
-    #    'sergeys_test':{
-    #        'solver': sergeys_solve_sequential,
-    #        'z_prev': None,
-    #        'prev_solution': None,
-    #        'answer': None
-    #    }
-    #}
+    solver_dict = {
+        'sergeys_test':{
+            'solver': sergeys_solve_sequential,
+            'z_prev': None,
+            'prev_solution': None,
+            'answer': None
+        },
+         'oslo_bergen':{
+            'solver': oslobergen_solve_sequential,
+            'z_prev': None,
+            'prev_solution': None,
+            'answer': None
+        },
+        'tikhonov_optimize_test':{
+            'solver': tikhonovs
+        },
+        'yas_most_solution':{
+            'solver': yas_kiwi_solver
+        },
+        'sb_1':{
+            'solver': sb_1_solution
+        }
+    }
 
     import my_curve_data
 
