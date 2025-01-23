@@ -13,6 +13,7 @@ from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve
 from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
 from submissions.yas_most_solution import solve_sequential as yas_kiwi_solver
 from submissions.sb_1 import solve_sequencial as sb_1_solution
+from submissions.solution_brute_magic_number import solve_sequencial as solution_brute_magic_number
 
 if __name__ == "__main__":
     solver_dict = {
@@ -36,7 +37,13 @@ if __name__ == "__main__":
         },
         'sb_1':{
             'solver': sb_1_solution
-        }
+        },
+        'brute_magic_number':{
+            'solver': solution_brute_magic_number,
+            'prev_solution': None,
+            'z_prev': None,
+            'answer': None
+        },
     }
 
     import my_curve_data
