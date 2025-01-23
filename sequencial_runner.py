@@ -12,6 +12,7 @@ from submissions.solution_example import solve_sequencial as sergeys_solve_seque
 from submissions.solution_OsloBergen import solve_sequencial as oslobergen_solve_sequential
 from submissions.tikhonov_solution_example import solve_sequencial as tikhonovs
 from submissions.yas_most_solution import solve_sequential as yas_kiwi_solver
+from submissions.sb_1 import solve_sequencial as sb_1_solution
 
 if __name__ == "__main__":
     solver_dict = {
@@ -32,6 +33,9 @@ if __name__ == "__main__":
         },
         'yas_most_solution':{
             'solver': yas_kiwi_solver
+        },
+        'sb_1':{
+            'solver': sb_1_solution
         }
     }
 
