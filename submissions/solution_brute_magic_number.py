@@ -1,12 +1,12 @@
 from itertools import product
-from multiprocessing import current_process
 from operator import itemgetter
 from tslearn.metrics import dtw_path
 import multiprocessing as mp
 import numpy as np
 
-#from tqdm import tqdm
+#from multiprocessing import current_process
 #from scipy.spatial.distance import cdist
+#from tqdm import tqdm
 #import matplotlib.pyplot as plt
 
 #run_n = 0
@@ -126,7 +126,7 @@ def solve_sequencial(
     def compute_best_worker(
         slice
     ):
-        current = current_process()
+        #current = current_process()
         this_ranges = ranges[slice]
 
         best_similarity = None
