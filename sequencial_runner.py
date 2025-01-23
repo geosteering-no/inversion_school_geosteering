@@ -8,17 +8,18 @@ import heat_map
 import utils
 
 # solver imports
-from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+#from submissions.solution_example import solve_sequencial as sergeys_solve_sequential
+from competition_plotter import solver_dict
 
 if __name__ == "__main__":
-    solver_dict = {
-        'sergeys_test':{
-            'solver': sergeys_solve_sequential,
-            'z_prev': None,
-            'prev_solution': None,
-            'answer': None
-        }
-    }
+    #solver_dict = {
+    #    'sergeys_test':{
+    #        'solver': sergeys_solve_sequential,
+    #        'z_prev': None,
+    #        'prev_solution': None,
+    #        'answer': None
+    #    }
+    #}
 
     import my_curve_data
 
