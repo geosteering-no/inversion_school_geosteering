@@ -38,12 +38,12 @@ if __name__ == "__main__":
         'sb_1':{
             'solver': sb_1_solution
         },
-        # 'brute_magic_number':{
-        #     'solver': solution_brute_magic_number,
-        #     'prev_solution': None,
-        #     'z_prev': None,
-        #     'answer': None
-        # },
+        'brute_magic_number':{
+            'solver': solution_brute_magic_number,
+            'prev_solution': None,
+            'z_prev': None,
+            'answer': None
+        },
     }
 
     import my_curve_data
