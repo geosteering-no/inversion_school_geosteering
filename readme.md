@@ -1,4 +1,4 @@
-# Real-Time Geological Inversion for Decision-Making and Stratigraphic Inversion Exercise
+# Lecture Notes on Real-Time Geological Inversion for Decision-Making and Stratigraphic Inversion Exercise
 
 ## Lecture notes
 
