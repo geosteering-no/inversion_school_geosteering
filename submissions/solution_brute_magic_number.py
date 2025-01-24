@@ -148,18 +148,15 @@ def solve_sequencial(
 
         return (best_similarity, best_path, best_range)
 
-    results = []
-    with mp.Pool(processes = n_cpus,
+    #results = []
+    #with mp.Pool(processes = n_cpus,
     #    initializer = tqdm.set_lock, initargs = (tqdm.get_lock(),)
-        ) as pool:
+    #    ) as pool:
 
-        results = pool.imap_unordered(
-            func      = compute_best_worker,
-            iterable  = chunk_ranges,
-            chunksize = 1)
-        results = [result for result in results]
+    similarity, path, range_r = compute_best_worker(slice(0, None))
 
-    similarity, path, range_r = min(results, key = itemgetter(0))
+
+    #similarity, path, range_r = min(results, key = itemgetter(0))
     previous_r2 = range_r[1]
 
     y0_inp = prev_y + trend_gradient * (x1 - prev_x)
