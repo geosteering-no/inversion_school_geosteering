@@ -2,7 +2,7 @@ import utils
 import numpy as np
 import matplotlib.pyplot as plt
 
-CENTER_OFFSET = 128
+CENTER_OFFSET = 160
 
 def get_log_with_noise(ref_log, log_offset_unit, delta_z, layer_depths, well_depths, noize_std=None, noize_rel_std=0.01, my_seed=None):
     # convert the layer depth and the well depth to indexes
