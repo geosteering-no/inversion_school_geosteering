@@ -92,6 +92,8 @@ if __name__ == "__main__":
         solver_dict[entry_key]['prev_solution'] = None
         solver_dict[entry_key]['answer'] = np.zeros((delta_x * max_i))
         solver_dict[entry_key]['z_prev'] = rel_depth_inds[from_ind]
+        solver_dict[entry_key]['total_time'] = 0.0
+        solver_dict[entry_key]['total_time'] = 0.0
 
     for i in range(max_i):
         x1 = from_ind + delta_x * i
@@ -117,16 +119,24 @@ if __name__ == "__main__":
     to_ind_extended = from_ind+max_i*delta_x
     image_part = heat_map.get_image_chunk(ref_data, lateral_log, from_ind, to_ind_extended, int(rel_depth_inds[from_ind]))
     plt.imshow(image_part, aspect='auto', vmin=-0.1, vmax=0.1, cmap='bwr')
-    plt.plot(rel_depth_inds[from_ind:to_ind_extended]-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET, '--', color='black', alpha=0.5,
-             label='True solution')
     for entry_key in solver_dict:
         # TODO improve visualization
         # compute misfit
         their_misfit = norm(rel_depth_inds[from_ind:to_ind_extended] - solver_dict[entry_key]['answer'], 1) / (to_ind_extended - from_ind)
         plt.plot(solver_dict[entry_key]['answer'] - rel_depth_inds[from_ind] + heat_map.CENTER_OFFSET,
                  color='black',
+                 linewidth = 2.0,
                  # alpha=0.5,
-                 label=f"{entry_key} e={their_misfit:.2f}")
+                 # label=f"{entry_key} e={their_misfit:.2f}"
+                 )
+    plt.plot(rel_depth_inds[from_ind:to_ind_extended]-rel_depth_inds[from_ind]+heat_map.CENTER_OFFSET,
+             '--', color='white', alpha=0.9,
+             label='True solution', linewidth=4.0)
+
+    # reasonable time: "5 minutes" - Øystein said as the boss
+
     plt.legend()
+    plt.savefig('content/preliminary_results.png', dpi=600, bbox_inches='tight')
 
     plt.show()
+
