@@ -1,3 +1,4 @@
+from functools import partial
 from itertools import product
 from operator import itemgetter
 from tslearn.metrics import dtw_path
@@ -57,6 +58,34 @@ import numpy as np
 #
 #    plt.tight_layout()
 #    plt.show()
+
+def compute_best_worker(
+    ranges,
+    log_segment,
+    ref_data,
+    slice
+):
+    #current = current_process()
+    this_ranges = ranges[slice]
+
+    best_similarity = None
+    best_path = None
+    best_range = None
+
+    #with tqdm(total = len(this_ranges)) as progress_bar:
+    #    for r in tqdm(this_ranges,
+    #        desc = str(current.name), position=current._identity[0] - 1):
+    for r in this_ranges:
+            path, similarity = dtw_path(
+                log_segment, ref_data[range(r[0], r[1]+1)],
+            )
+            if best_similarity is None or similarity < best_similarity:
+                best_range = r
+                best_similarity = similarity
+                best_path = path
+    #    progress_bar.update(1)
+
+    return (best_similarity, best_path, best_range)
 
 # Keep track of the last position in the ref_data
 previous_r2 = None
@@ -122,41 +151,19 @@ def solve_sequencial(
             chunk_size * (idx+1) if idx < (n_cpus-1) else None)
         for idx in range(n_cpus)]
 
-    global compute_best_worker
-    def compute_best_worker(
-        slice
-    ):
-        #current = current_process()
-        this_ranges = ranges[slice]
-
-        best_similarity = None
-        best_path = None
-        best_range = None
-
-        #with tqdm(total = len(this_ranges)) as progress_bar:
-        #    for r in tqdm(this_ranges,
-        #        desc = str(current.name), position=current._identity[0] - 1):
-        for r in this_ranges:
-                path, similarity = dtw_path(
-                    log_segment, ref_data[range(r[0], r[1]+1)],
-                )
-                if best_similarity is None or similarity < best_similarity:
-                    best_range = r
-                    best_similarity = similarity
-                    best_path = path
-        #    progress_bar.update(1)
-
-        return (best_similarity, best_path, best_range)
-
-    #results = []
-    #with mp.Pool(processes = n_cpus,
+    results = []
+    with mp.Pool(processes = n_cpus,
     #    initializer = tqdm.set_lock, initargs = (tqdm.get_lock(),)
-    #    ) as pool:
+        ) as pool:
 
-    similarity, path, range_r = compute_best_worker(slice(0, None))
+        partial_worker = partial(compute_best_worker, ranges, log_segment, ref_data)
+        results = pool.imap_unordered(
+            func      = partial_worker,
+            iterable  = chunk_ranges,
+            chunksize = 1)
+        results = [result for result in results]
 
-
-    #similarity, path, range_r = min(results, key = itemgetter(0))
+    similarity, path, range_r = min(results, key = itemgetter(0))
     previous_r2 = range_r[1]
 
     y0_inp = prev_y + trend_gradient * (x1 - prev_x)
