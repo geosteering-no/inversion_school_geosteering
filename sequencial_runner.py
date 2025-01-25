@@ -23,7 +23,7 @@ if __name__ == "__main__":
         'sergeys_test':{
             'solver': sergeys_solve_sequential,
         },
-         'oslo_bergen':{
+        'oslo_bergen':{
             'solver': oslobergen_solve_sequential,
         },
         'tikhonov_optimize_test':{

@@ -1,0 +1,19 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage{graphicx}
+\usepackage{pgffor} 
+
+\begin{document}
+
+% No margins
+%\setbeamersize{text margin left=0pt,text margin right=0pt}
+
+% Add slides for each image
+\foreach \n in {0,1,2,3,4,5,6,7,8,9}{
+    \begin{frame}[plain] % Plain removes slide header/footer
+        \includegraphics[width=14cm]{result_step_\n.png}
+    \end{frame}
+}
+
+
+\end{document}

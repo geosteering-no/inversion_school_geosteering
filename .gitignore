@@ -6,3 +6,5 @@ __pycache__/
 figs/gamma-ray.pdf
 
 secrets/
+
+.DS_Store
