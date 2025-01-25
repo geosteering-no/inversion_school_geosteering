@@ -50,6 +50,9 @@ if __name__ == "__main__":
 
     opt_curve_2_total = np.zeros((delta_x*max_i))
 
+    total_log = np.zeros((delta_x*max_i))
+    total_predicted_log = np.zeros((delta_x*max_i))
+
     for i in range(max_i):
         x1 = from_ind + delta_x * i
         x2 = from_ind + delta_x * (i+1) - 1
@@ -72,11 +75,16 @@ if __name__ == "__main__":
         y0_inp = p_opt_2[1]
         y1_inp = y0_inp + coarse_geo_trend * delta_x
 
-        plt.figure()
+        # plt.figure()
         result2 = objective2(x, p_opt_2[0], p_opt_2[1])
-        plt.plot(result2, label='Best fit 2', alpha=0.5)
-        plt.plot(log_segment, 'v', label='True log', alpha=0.5)
+
+        total_predicted_log[delta_x*i:delta_x*(i+1)] = result2
+        total_log[delta_x * i:delta_x * (i + 1)] = log_segment
+
+        # plt.plot(result2, label='Best fit 2', alpha=0.5)
+        # plt.plot(log_segment, 'v', label='True log', alpha=0.5)
         # plt.show()
+
 
 
     to_ind_extended = from_ind+max_i*delta_x
@@ -90,4 +98,9 @@ if __name__ == "__main__":
              label='Constrained solution')
     plt.legend()
 
+
+    plt.figure()
+    plt.plot(result2, label='A fit', alpha=0.5)
+    plt.plot(log_segment, 'v', label='True lateral log', alpha=0.5)
+    plt.savefig('content/some_fit_results.png', dpi=600, bbox_inches='tight')
     plt.show()
