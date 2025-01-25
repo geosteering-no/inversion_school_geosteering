@@ -8,3 +8,5 @@ figs/gamma-ray.pdf
 secrets/
 
 .DS_Store
+
+competition_results/results.*
